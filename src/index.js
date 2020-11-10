@@ -44,38 +44,39 @@
     return 'green'
   }
 
-  records().then(metrics => {
-    metrics.forEach(metric => {
-      if (metric !== null) {
-        if (!metric.record.metrics.largest_contentful_paint) {
-          metric.record.metrics.largest_contentful_paint = { percentiles: { p75: 'N/A' } }
-        } else {
-          metric.record.metrics.largest_contentful_paint.percentiles.p75 /= 1000
-        }
+  if (window.cruxKey !== 'null') { // Only do this if the cruxKey is set.
+    records().then(metrics => {
+      metrics.forEach(metric => {
+        if (metric !== null) {
+          if (!metric.record.metrics.largest_contentful_paint) {
+            metric.record.metrics.largest_contentful_paint = { percentiles: { p75: 'N/A' } }
+          } else {
+            metric.record.metrics.largest_contentful_paint.percentiles.p75 /= 1000
+          }
 
-        if (!metric.record.metrics.first_input_delay) {
-          metric.record.metrics.first_input_delay = { percentiles: { p75: 'N/A' } }
-        } else {
-          metric.record.metrics.first_input_delay.percentiles.p75 /= 1000
-        }
+          if (!metric.record.metrics.first_input_delay) {
+            metric.record.metrics.first_input_delay = { percentiles: { p75: 'N/A' } }
+          } else {
+            metric.record.metrics.first_input_delay.percentiles.p75 /= 1000
+          }
 
-        if (!metric.record.metrics.cumulative_layout_shift) {
-          metric.record.metrics.cumulative_layout_shift = { percentiles: { p75: 'N/A' } }
+          if (!metric.record.metrics.cumulative_layout_shift) {
+            metric.record.metrics.cumulative_layout_shift = { percentiles: { p75: 'N/A' } }
+          }
         }
-      }
-    })
+      })
 
-    serpArray.forEach((e, k) => {
-      if (metrics[k] !== null) {
-        e.insertAdjacentHTML('afterend', `
+      serpArray.forEach((e, k) => {
+        if (metrics[k] !== null) {
+          e.insertAdjacentHTML('afterend', `
       <div id="serpVitals">
         LCP:<span class="${getColor('lcp', metrics[k].record.metrics.largest_contentful_paint.percentiles.p75)}">${metrics[k].record.metrics.largest_contentful_paint.percentiles.p75}</span>
         FID:<span class="${getColor('fid', metrics[k].record.metrics.first_input_delay.percentiles.p75)}">${metrics[k].record.metrics.first_input_delay.percentiles.p75}</span>
         CLS:<span class="${getColor('cls', metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75)}">${metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75}</span>
       </div>
   `)
-      }
+        }
+      })
     })
   }
-  )
 })()
