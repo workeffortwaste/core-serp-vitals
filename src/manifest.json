@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+    "name": "Core SERP Vitals",
+    "version": "1.0.0",
+    "description": "Show the Core Web Vitals from the Chrome User Experience Report in the Google Search Results.",
+    "background": {
+        "scripts" : ["background.js"],
+        "persistent": true
+    },
+    "options_page": "options.html",
+    "permissions": ["storage","activeTab", "https://www.google.com/search?*","https://www.google.co.uk/search?*"]
+  }
