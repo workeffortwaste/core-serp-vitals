@@ -3,7 +3,7 @@
     "name": "Core SERP Vitals",
     "icons": { "128": "icon128.png"},
     "version": "1.0.0",
-    "description": "Show the Core Web Vitals from the Chrome User Experience Report in the Google Search Results.",
+    "description": "Show the Core Web Vitals data from the Chrome User Experience Report in the Google Search Results.",
     "background": {
         "scripts" : ["background.js"],
         "persistent": true
