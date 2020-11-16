@@ -1,5 +1,7 @@
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.tabs.create({ url: 'options.html' })
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    chrome.tabs.create({ url: 'options.html' })
+  }
 })
 
 async function getLocalStorageValue (key) {
