@@ -1,7 +1,9 @@
 function save_options () {
   const apiKey = document.getElementById('apiKey').value
+  const deviceSettings = document.getElementById('deviceSettings').value
   chrome.storage.sync.set({
-    apiKey: apiKey
+    apiKey: apiKey,
+    deviceSettings: deviceSettings
   }, function () {
     // Update status to let user know options were saved.
     const status = document.getElementById('status')
@@ -14,9 +16,11 @@ function save_options () {
 
 function restore_options () {
   chrome.storage.sync.get({
-    apiKey: null
+    apiKey: null,
+    deviceSettings: 'PHONE'
   }, function (items) {
     document.getElementById('apiKey').value = items.apiKey
+    document.getElementById('deviceSettings').value = items.deviceSettings
   })
 }
 document.addEventListener('DOMContentLoaded', restore_options)

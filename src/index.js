@@ -11,7 +11,7 @@
   })
 
   const records = async () => {
-    return await batch(urls.map(url => ({ url, formFactor: 'PHONE' })))
+    return await batch(urls.map(url => ({ url, formFactor: window.vitalsDevice })))
   }
 
   const css = `

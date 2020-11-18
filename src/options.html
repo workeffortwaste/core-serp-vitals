@@ -21,22 +21,27 @@
     border-radius: 5px;
     width:max-content;
 ">
-<label>
+<label style="display:block;">
 Chrome UX Report API Key
 <input type="text" id="apiKey">
 </label>
+<label for="device-select">Choose the device type to display data for:</label>
+<select name="device" id="deviceSettings">
+    <option value="PHONE">Mobile</option>
+    <option value="DESKTOP">Desktop</option>
+</select>
 <div id="status"></div>
 <button id="save" style="
     margin-top: 16px;
 ">Save</button>
 </div>
+<h2>Support</h2>
+<p>Help support this plugin and my other projects by buying me a coffee.</p>
+<a href="https://ko-fi.com/defaced">Buy me a coffee!</a>
 <h2>About</h2>
 <p>This plugin was created by Chris Johnson.</p>
 <p>Website: <a href="https://defaced.dev/">https://defaced.dev/</a></p>
 <p>Twitter: <a href="https://twitter.com/defaced/">https://twitter.com/defaced/</a></p>
-<h2>Support</h2>
-<p>Help support this plugin and my other projects by buying me a coffee.</p>
-<a href="https://ko-fi.com/defaced">Buy me a coffee!</a>
 <script src="options.js"></script>
 </body>
 </html>

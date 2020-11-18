@@ -17,8 +17,12 @@ async function getLocalStorageValue (key) {
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.status === 'complete' && tab.url !== undefined) {
     const cruxKey = await getLocalStorageValue('apiKey')
+    let device = await getLocalStorageValue('deviceSettings')
+
+    if (Object.keys(device).length === 0) { device = { deviceSettings: 'PHONE' } }
+
     chrome.tabs.executeScript(tab.id, {
-      code: 'window.cruxKey = "' + cruxKey.apiKey + '"'
+      code: 'window.cruxKey = "' + cruxKey.apiKey + '"; window.vitalsDevice = "' + device.deviceSettings + '"'
     }, function () {
       chrome.tabs.executeScript(tab.id, { file: 'bundle.js' })
     })
