@@ -2,7 +2,7 @@
 // @defaced
 (function () {
   // Make sure nothing has been previously injected, and the API key has been set.
-  if (window.cruxKey === 'null' && document.querySelectorAll('#serpVitals').length < 1) { return }
+  if (window.cruxKey === 'null' && document.querySelectorAll('.serp-vitals').length < 1) { return }
 
   const crux = require('crux-api/batch')
   const batch = crux.createBatch({ key: window.cruxKey })
@@ -19,13 +19,11 @@
 
   const css = `
     <style>
-    #serpVitals {color: #4d5156; font-size: .75rem;}
-    #serpVitals span{
-      font-weight:bold;
-    }
-    #serpVitals .red {color: #ff4e42}
-    #serpVitals .green {color: #0cce6b}
-    #serpVitals .orange {color: #ffa400}
+    .serp-vitals {color: #4d5156; font-size: .75rem;}
+    .serp-vitals span {font-weight:bold;}
+    .serp-vitals .red {color: #ff4e42}
+    .serp-vitals .green {color: #0cce6b}
+    .serp-vitals .orange {color: #ffa400}
     </style>
   `
   document.body.insertAdjacentHTML('beforeend', css)
@@ -71,7 +69,7 @@
     serpArray.forEach((e, k) => {
       if (metrics[k] !== null) {
         e.insertAdjacentHTML('afterend', `
-      <div id="serpVitals">
+      <div class="serp-vitals">
         LCP:<span class="${getColor('lcp', metrics[k].record.metrics.largest_contentful_paint.percentiles.p75)}">${metrics[k].record.metrics.largest_contentful_paint.percentiles.p75}</span>
         FID:<span class="${getColor('fid', metrics[k].record.metrics.first_input_delay.percentiles.p75)}">${metrics[k].record.metrics.first_input_delay.percentiles.p75}</span>
         CLS:<span class="${getColor('cls', metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75)}">${metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75}</span>
