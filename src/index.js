@@ -2,7 +2,7 @@
 // @defaced
 (function () {
   // Make sure nothing has been previously injected, and the API key has been set.
-  if (window.cruxKey === 'null' && document.querySelectorAll('.serp-vitals').length < 1) { return }
+  if (window.cruxKey === 'undefined' && document.querySelectorAll('.serp-vitals').length < 1) { return }
 
   const crux = require('crux-api/batch')
   const batch = crux.createBatch({ key: window.cruxKey })
