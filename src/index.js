@@ -2,7 +2,18 @@
 // @defaced
 (function () {
   // Make sure nothing has been previously injected, and the API key has been set.
-  if (window.cruxKey === 'undefined' && document.querySelectorAll('.serp-vitals').length < 1) { return }
+  if (window.cruxKey === 'undefined' || document.getElementById('serp-styles')) { return }
+
+  const css = `
+    <style id="serp-styles">
+    .serp-vitals {color: #4d5156; font-size: .75rem;}
+    .serp-vitals span {font-weight:bold;}
+    .serp-vitals .red {color: #ff4e42}
+    .serp-vitals .green {color: #0cce6b}
+    .serp-vitals .orange {color: #ffa400}
+    </style>
+  `
+  document.body.insertAdjacentHTML('beforeend', css)
 
   const crux = require('crux-api/batch')
   const batch = crux.createBatch({ key: window.cruxKey })
@@ -16,17 +27,6 @@
   const records = async () => {
     return await batch(urls.map(url => ({ url, formFactor: window.vitalsDevice })))
   }
-
-  const css = `
-    <style>
-    .serp-vitals {color: #4d5156; font-size: .75rem;}
-    .serp-vitals span {font-weight:bold;}
-    .serp-vitals .red {color: #ff4e42}
-    .serp-vitals .green {color: #0cce6b}
-    .serp-vitals .orange {color: #ffa400}
-    </style>
-  `
-  document.body.insertAdjacentHTML('beforeend', css)
 
   const constraints = {
     lcp: { min: 2.5, max: 4 },

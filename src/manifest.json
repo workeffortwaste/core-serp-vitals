@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Core SERP Vitals",
     "icons": { "128": "icon128.png"},
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Show the Core Web Vitals data from the Chrome User Experience Report in the Google Search Results.",
     "background": {
         "scripts" : ["background.js"],
