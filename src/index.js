@@ -19,7 +19,11 @@
   const batch = crux.createBatch({ key: window.cruxKey })
 
   const urls = []
-  const serpArray = [...document.querySelectorAll('#search .rc > div > a[ping]')]
+  let serpArray = [...document.querySelectorAll('#search .rc > div > a[ping]')]
+  // Allow for potential changes to the SERP layout.
+  if (serpArray.length === 0) {
+    serpArray = [...document.querySelectorAll('#search .g div > a[ping]')]
+  }
   serpArray.forEach(e => {
     urls.push(e.getAttribute('href'))
   })
