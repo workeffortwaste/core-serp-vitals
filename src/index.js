@@ -24,6 +24,9 @@
   if (serpArray.length === 0) {
     serpArray = [...document.querySelectorAll('#search .g div > a[ping][data-ved]')]
   }
+  // Filter media elements from the array by removing any link with an explicity width set.
+  serpArray = serpArray.filter(e => !e.style.width)
+
   serpArray.forEach(e => {
     urls.push(e.getAttribute('href'))
   })
