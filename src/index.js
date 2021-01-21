@@ -27,6 +27,9 @@
   // Filter media elements from the array by removing any link with an explicity width set.
   serpArray = serpArray.filter(e => !e.style.width)
 
+  // Filter large media elements by looking for a height on the parent.
+  serpArray = serpArray.filter(e => !e.parentElement.style.height)
+
   serpArray.forEach(e => {
     urls.push(e.getAttribute('href'))
   })
