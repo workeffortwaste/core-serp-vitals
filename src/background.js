@@ -18,11 +18,13 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.status === 'complete' && tab.url !== undefined) {
     const cruxKey = await getLocalStorageValue('apiKey')
     let device = await getLocalStorageValue('deviceSettings')
+    let level = await getLocalStorageValue('levelSettings')
 
     if (Object.keys(device).length === 0) { device = { deviceSettings: 'PHONE' } }
+    if (Object.keys(level).length === 0) { level = { levelSettings: 'URL' } }
 
     chrome.tabs.executeScript(tab.id, {
-      code: 'window.cruxKey = "' + cruxKey.apiKey + '"; window.vitalsDevice = "' + device.deviceSettings + '"'
+      code: 'window.vitalsLevel = "' + level.levelSettings + '"; window.cruxKey = "' + cruxKey.apiKey + '"; window.vitalsDevice = "' + device.deviceSettings + '"'
     }, function () {
       chrome.tabs.executeScript(tab.id, { file: 'bundle.js' })
     })

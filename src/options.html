@@ -1,47 +1,264 @@
 <!DOCTYPE html>
 <html>
-<head><title>Core SERP Vitals - Settings Page</title></head>
-<body style="
-    font-size: 100%;
-    margin: 32px;
-">
-<h1>Core SERP Vitals - Settings Page</h1>
-<p>Show the Core Web Vitals data from the Chrome User Experience Report in the Google Search Results.</p>
-<p>Website: <a href="https://defaced.dev/tools/core-serp-vitals/">https://defaced.dev/tools/core-serp-vitals/</a></p>
-<p>GitHub: <a href="https://github.com/workeffortwaste/core-serp-vitals">https://github.com/workeffortwaste/core-serp-vitals</a></p>
-<h2>Setup</h2>
-<p>This extensions requires a <a href="https://developers.google.com/web/tools/chrome-user-experience-report/api/reference">Chrome UX Report API</a> key.</p>
-<p>You can obtain a key from this page: <a href="https://developers.google.com/web/tools/chrome-user-experience-report/api/guides/getting-started">https://developers.google.com/web/tools/chrome-user-experience-report/api/guides/getting-started</a></a></p>    
-<p>Once you have a key enter in the box below and click <strong>save</strong>.</p>
-</div>
-<div id="form" style="
-    border-style: solid;
-    border-width: 1px;
+<head>
+    <meta charset="UTF-8">
+    <title>Core SERP Vitals - Settings Page</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Martel:wght@900&family=Open+Sans:wght@400;600&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            font-size:100%;
+            margin:8px;
+        }
+        label{
+            display:block;
+        }
+        #form {
+            border-style: solid;
+            border-width: 1px;
+            padding: 16px;
+            border-radius: 5px;
+            width:max-content;
+        }
+        #save {
+            margin-top:16px;
+        }
+        select{
+            width:100%;
+        }
+        :root {
+            --colour-background: #e7e6e8;
+            --colour-text: #212121;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--colour-background);
+            color: var(--colour-text);
+            line-height: 1.7;
+            font-size: 1.2em;
+        }
+        h1, h2, h3, h4, h5 {
+            font-family: 'Martel', serif;
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        h1{
+            font-size:3rem;
+        }
+        h4{
+            font-size: 1.1em;
+        }
+        h2{
+            margin-top:32px;
+        }
+        .grid-vid {
+            display: grid;
+            grid-template-columns: 1fr;
+            width: 100%;
+            position: relative;
+            grid-gap: 16px;
+            margin-top: 32px;
+        }
+        .grid-vid:not(.grid-vid-flipped) div:last-of-type, .grid-vid-flipped div:first-of-type {
+            background: var(--colour-text);
+            padding: 16px;
+            color: var(--colour-background);
+            padding-left: 32px;
+            padding-right: 32px;
+        }
+        select, input{
+            background: transparent;
+            color: var(--colour-background);
+            /* border: white; */
+            border: solid 2px var(--colour-background);
+            /* height: 16px; */
+            height: 44px;
+            text-transform: uppercase;
+            font-size: .9rem;
+            font-weight: bold;
+            font-family: 'Open Sans', sans-serif;
+            padding-left: 16px;
+            padding-right: 16px;
+            cursor: pointer;
+            box-sizing:border-box;
+            width:100%;
+        }
+        select:focus{
+            outline: 0;
+            color: #df25b5;
+            border-color: #df25b5;
+        }
+        input:focus{
+            outline: 0;
+            color: #df25b5;
+            border-color: #df25b5;
+            border-radius:0;
+        }
+        option{
+            color: #212121;
+        }
+        main {
+            padding: 32px;
+            padding-top: 16px;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+
+        }
+        select {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .select-wrapper, .input-wrapper {
+            position: relative;
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        .select-wrapper:after {
+            content: "›";
+            transform:rotate(90deg);
+            font-size: 18px;
+            top: 6px;
+            right: 10px;
+            position: absolute;
+            color:white;
+        }
+
+        a{
+            color:var(--colour-text);
+        }
+
+        #submit {
+            border-style: solid;
+            border-width: 2px;
+            border-color: var(--colour-background);
+            padding: 16px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: inline-block;
+            background: transparent;
+            outline: none;
+            font-weight: bold;
+            font-family: 'Open Sans', sans-serif;
+            font-size: .9rem;
+            height: 44px;
+            color: var(--colour-background);
+            cursor: pointer;
+        }
+
+               .boxout-alt{
+            border: 2px solid;
+    color: #df25b5;
+    padding: 16px 32px;
+    margin: 32px 0;
+        }
+        .boxout-alt .button {
+                font-size: .9rem;
+    font-weight: bold;
+    text-decoration: none;
+            border-style: solid;
+    border-width: 2px;
+    border-color: var(--colour-text);
     padding: 16px;
-    border-radius: 5px;
-    width:max-content;
-">
-<label style="display:block;">
-Chrome UX Report API Key
-<input type="text" id="apiKey">
-</label>
-<label for="device-select">Choose the device type to display data for:</label>
-<select name="device" id="deviceSettings">
-    <option value="PHONE">Mobile</option>
-    <option value="DESKTOP">Desktop</option>
-</select>
-<div id="status"></div>
-<button id="save" style="
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-transform: uppercase;
     margin-top: 16px;
-">Save</button>
-</div>
-<h2>Support</h2>
-<p>Help support this plugin and my other projects by buying me a coffee.</p>
-<a href="https://ko-fi.com/defaced">Buy me a coffee!</a>
-<h2>About</h2>
-<p>This plugin was created by Chris Johnson.</p>
-<p>Website: <a href="https://defaced.dev/">https://defaced.dev/</a></p>
-<p>Twitter: <a href="https://twitter.com/defaced/">https://twitter.com/defaced/</a></p>
+    margin-bottom: 16px;
+    display: inline-block;
+    border-color: #df25b5;
+    text-align: center;
+    /* width: 100%; */
+    box-sizing: border-box;
+}
+.boxout-alt a {
+    color: #df25b5!important;
+}
+.boxout-alt h2{
+    margin-top:16px;
+}
+#status{
+    border-style: dashed;
+    border-width: 2px;
+    border-color: var(--colour-background);
+    padding: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: inline-block;
+    background: transparent;
+    outline: none;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    font-size: .9rem;
+    color: var(--colour-background);
+    float:right;
+}
+#status:empty{
+    display:none;
+}
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Core SERP Vitals - Settings</h1>
+        <p><i>Show the <b>Core Web Vitals</b> data from the Chrome User Experience Report in the Google Search Results.</i></p>
+        <p>Website: <a href="https://defaced.dev/tools/core-serp-vitals/">https://defaced.dev/tools/core-serp-vitals/</a></p>
+        <p>GitHub: <a href="https://github.com/workeffortwaste/core-serp-vitals">https://github.com/workeffortwaste/core-serp-vitals</a></p>
+        <h2>Initial Setup</h2>
+        <p>This extensions requires a <a href="https://developers.google.com/web/tools/chrome-user-experience-report/api/reference">Chrome UX Report API</a> key.</p>
+        <p>You can obtain a key from this page: <a href="https://developers.google.com/web/tools/chrome-user-experience-report/api/guides/getting-started">https://developers.google.com/web/tools/chrome-user-experience-report/api/guides/getting-started</a></a></p>    
+        
+            <section class="grid-vid">
+        <div class="box-out">
+            <h3>Extension Settings</h3>
+        <label>
+        Chrome UX Report API Key:
+        </label>
+        <div class="input-wrapper">
+            <input type="text" id="apiKey">
+        </div>
+        
+        <label for="device-select">Select the Core Web Vitals device type:</label>
+        <div class="select-wrapper">
+        <select name="device" id="deviceSettings">
+            <option value="PHONE">Mobile</option>
+            <option value="DESKTOP">Desktop</option>
+        </select>
+        </div>
+        
+        <label for="level-select">Select the Core Web Vitals measurement level:</label>
+        <div class="select-wrapper">
+        <select name="level" id="levelSettings">
+            <option value="ORIGIN">Origin</option>
+            <option value="URL">URL</option>
+        </select>
+        </div>
+
+        <button id="submit">Save Settings</button><div id="status"></div>
+        </div>
+        </section>
+        <section class="boxout-alt">
+        <h2>Support</h2>
+        <p>If my fun web experiments brighten your day, my tools save your bacon, or you simply want to say thanks, consider supporting me on Ko-fi by buying me a coffee.</p>
+        <p>Even a small amount will go a long way to covering the costs of running and maintaining my projects.</p>
+         <a class="button" href="https://ko-fi.com/defaced">Buy Me A Coffee</a>
+    </section>
+
+        <h2>About</h2>
+        <p>This plugin was created by Chris Johnson.</p>
+        <p>Website: <a href="https://defaced.dev/">https://defaced.dev/</a></p>
+        <p>Twitter: <a href="https://twitter.com/defaced/">https://twitter.com/defaced/</a></p>
+</main>
 <script src="options.js"></script>
 </body>
 </html>

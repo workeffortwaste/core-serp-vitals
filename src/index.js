@@ -35,6 +35,10 @@
   })
 
   const records = async () => {
+    if (window.vitalsLevel === 'ORIGIN') {
+      return await batch(urls.map(origin => ({ origin, formFactor: window.vitalsDevice })))
+    }
+
     return await batch(urls.map(url => ({ url, formFactor: window.vitalsDevice })))
   }
 
