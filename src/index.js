@@ -19,11 +19,9 @@
   const batch = crux.createBatch({ key: window.cruxKey })
 
   const urls = []
-  let serpArray = [...document.querySelectorAll('#search .rc > div > a[ping][data-ved]')]
-  // Allow for potential changes to the SERP layout.
-  if (serpArray.length === 0) {
-    serpArray = [...document.querySelectorAll('#search .g div > a[ping][data-ved]')]
-  }
+  // Select the links on the page.
+  let serpArray = [...document.querySelectorAll('#search .g div > a[data-ved]')]
+
   // Filter media elements from the array by removing any link with an explicity width set.
   serpArray = serpArray.filter(e => !e.style.width)
 
