@@ -20,7 +20,7 @@
 
   const urls = []
   // Select the links on the page.
-  let serpArray = [...document.querySelectorAll('#search .g div > a[data-ved]')]
+  let serpArray = [...document.querySelectorAll('#search .g > div > div > div > a[data-ved][href^="http"]')]
 
   // Filter media elements from the array by removing any link with an explicity width set.
   serpArray = serpArray.filter(e => !e.style.width)
