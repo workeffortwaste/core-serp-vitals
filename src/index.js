@@ -66,7 +66,7 @@
     lcp: { min: 2.5, max: 4 },
     fid: { min: 0.1, max: 0.3 },
     cls: { min: 0.1, max: 0.25 },
-    inp: { min: 200, max: 500 },
+    inp: { min: 0.2, max: 0.5 },
     ttfb: { min: 0.8, max: 1.8 }
   }
 
@@ -102,6 +102,8 @@
 
         if (!metric.record.metrics.experimental_interaction_to_next_paint) {
           metric.record.metrics.experimental_interaction_to_next_paint = { percentiles: { p75: 'N/A' } }
+        } else {
+          metric.record.metrics.experimental_interaction_to_next_paint.percentiles.p75 /= 1000
         }
 
         if (!metric.record.metrics.experimental_time_to_first_byte) {
