@@ -14,6 +14,12 @@ async function getLocalStorageValue (key) {
   })
 }
 
+const runtimeInjection = async (settings) => {
+  window.vitalsLevel = settings.level
+  window.cruxKey = settings.cruxKey
+  window.vitalsDevice = settings.vitalsDevice
+}
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.status === 'complete' && tab.url !== undefined) {
     const cruxKey = await getLocalStorageValue('apiKey')
@@ -23,10 +29,21 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (Object.keys(device).length === 0) { device = { deviceSettings: 'PHONE' } }
     if (Object.keys(level).length === 0) { level = { levelSettings: 'URL' } }
 
-    chrome.tabs.executeScript(tab.id, {
-      code: 'window.vitalsLevel = "' + level.levelSettings + '"; window.cruxKey = "' + cruxKey.apiKey + '"; window.vitalsDevice = "' + device.deviceSettings + '"'
-    }, function () {
-      chrome.tabs.executeScript(tab.id, { file: 'bundle.js' })
+    const settings = {
+      cruxKey: cruxKey.apiKey,
+      level: level.levelSettings,
+      vitalsDevice: device.deviceSettings
+    }
+
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: runtimeInjection,
+      args: [settings]
+    }, () => {
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['bundle.js']
+      })
     })
   }
 })
