@@ -43,7 +43,8 @@
   const constraints = {
     lcp: { min: 2.5, max: 4 },
     fid: { min: 0.1, max: 0.3 },
-    cls: { min: 0.1, max: 0.25 }
+    cls: { min: 0.1, max: 0.25 },
+    inp: { min: 200, max: 500 }
   }
 
   const getColor = (type, score) => {
@@ -75,6 +76,10 @@
         if (!metric.record.metrics.cumulative_layout_shift) {
           metric.record.metrics.cumulative_layout_shift = { percentiles: { p75: 'N/A' } }
         }
+
+        if (!metric.record.metrics.experimental_interaction_to_next_paint) {
+          metric.record.metrics.experimental_interaction_to_next_paint = { percentiles: { p75: 'N/A' } }
+        }
       }
     })
 
@@ -85,6 +90,7 @@
         LCP:<span class="${getColor('lcp', metrics[k].record.metrics.largest_contentful_paint.percentiles.p75)}">${metrics[k].record.metrics.largest_contentful_paint.percentiles.p75}</span>
         FID:<span class="${getColor('fid', metrics[k].record.metrics.first_input_delay.percentiles.p75)}">${metrics[k].record.metrics.first_input_delay.percentiles.p75}</span>
         CLS:<span class="${getColor('cls', metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75)}">${metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75}</span>
+        INP:<span class="${getColor('inp', metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75)}">${metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75}</span>
       </div>
   `)
       }
