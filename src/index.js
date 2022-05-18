@@ -66,7 +66,8 @@
     lcp: { min: 2.5, max: 4 },
     fid: { min: 0.1, max: 0.3 },
     cls: { min: 0.1, max: 0.25 },
-    inp: { min: 200, max: 500 }
+    inp: { min: 200, max: 500 },
+    ttfb: { min: 0.8, max: 1.8 }
   }
 
   const getColor = (type, score) => {
@@ -102,6 +103,12 @@
         if (!metric.record.metrics.experimental_interaction_to_next_paint) {
           metric.record.metrics.experimental_interaction_to_next_paint = { percentiles: { p75: 'N/A' } }
         }
+
+        if (!metric.record.metrics.experimental_time_to_first_byte) {
+          metric.record.metrics.experimental_time_to_first_byte = { percentiles: { p75: 'N/A' } }
+        } else {
+          metric.record.metrics.experimental_time_to_first_byte.percentiles.p75 /= 1000
+        }
       }
     })
 
@@ -116,6 +123,7 @@
         </div>
         <div class="serp-vitals serp-vitals--experimental">
           <span class="serp-vitals-tag">INP</span><span class="${getColor('inp', metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75)}">${metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75}</span>
+          <span class="serp-vitals-tag">TTFB</span><span class="${getColor('ttfb', metrics[k].record.metrics.experimental_time_to_first_byte.percentiles.p75)}">${metrics[k].record.metrics.experimental_time_to_first_byte.percentiles.p75}</span>
         </div>
       </div>
   `)
