@@ -7,10 +7,32 @@
   const css = `
     <style id="serp-styles">
     .serp-vitals {color: #4d5156; font-size: .75rem;}
-    .serp-vitals span {font-weight:bold;}
     .serp-vitals .red {color: #ff4e42}
     .serp-vitals .green {color: #0cce6b}
     .serp-vitals .orange {color: #ffa400}
+    .serp-vitals:before {
+      content: 'Core Web Vitals';
+      color: #b9bcbf;
+    }
+    .serp-vitals.serp-vitals--experimental:before {
+      content: 'Experimental';
+    }
+    .serp-vitals {
+      border: 1px solid #dadce0;
+      border-radius: 3px;
+      width: max-content;
+      padding: 1px 4px 2px;
+      display:inline-block;
+    }
+    .serp-vitals .serp-vitals-tag {
+      border: 1px solid #81868a;
+      border-radius: 2px;
+      padding: 0 4px;
+      font-size: 10px;
+      margin-left: 4px;
+      margin-right: 4px;
+      display: inline-block;
+    }
     </style>
   `
   document.body.insertAdjacentHTML('beforeend', css)
@@ -86,11 +108,15 @@
     serpArray.forEach((e, k) => {
       if (metrics[k] !== null) {
         e.insertAdjacentHTML('afterend', `
-      <div class="serp-vitals">
-        LCP:<span class="${getColor('lcp', metrics[k].record.metrics.largest_contentful_paint.percentiles.p75)}">${metrics[k].record.metrics.largest_contentful_paint.percentiles.p75}</span>
-        FID:<span class="${getColor('fid', metrics[k].record.metrics.first_input_delay.percentiles.p75)}">${metrics[k].record.metrics.first_input_delay.percentiles.p75}</span>
-        CLS:<span class="${getColor('cls', metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75)}">${metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75}</span>
-        INP:<span class="${getColor('inp', metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75)}">${metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75}</span>
+      <div class="serp-vitals-container">
+        <div class="serp-vitals">
+          <span class="serp-vitals-tag">LCP</span><span class="${getColor('lcp', metrics[k].record.metrics.largest_contentful_paint.percentiles.p75)}">${metrics[k].record.metrics.largest_contentful_paint.percentiles.p75}</span>
+          <span class="serp-vitals-tag">FID</span><span class="${getColor('fid', metrics[k].record.metrics.first_input_delay.percentiles.p75)}">${metrics[k].record.metrics.first_input_delay.percentiles.p75}</span>
+          <span class="serp-vitals-tag">CLS</span><span class="${getColor('cls', metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75)}">${metrics[k].record.metrics.cumulative_layout_shift.percentiles.p75}</span>
+        </div>
+        <div class="serp-vitals serp-vitals--experimental">
+          <span class="serp-vitals-tag">INP</span><span class="${getColor('inp', metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75)}">${metrics[k].record.metrics.experimental_interaction_to_next_paint.percentiles.p75}</span>
+        </div>
       </div>
   `)
       }
