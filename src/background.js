@@ -20,8 +20,15 @@ const runtimeInjection = async (settings) => {
   window.vitalsDevice = settings.vitalsDevice
 }
 
+const validLocation = async () => {
+  return location.pathname === '/search'
+}
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.status === 'complete' && tab.url !== undefined) {
+    /* Abort if we're not on a search page */
+    if (new URL(tab.url).pathname !== '/search') return
+
     const cruxKey = await getLocalStorageValue('apiKey')
     let device = await getLocalStorageValue('deviceSettings')
     let level = await getLocalStorageValue('levelSettings')
@@ -34,7 +41,6 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       level: level.levelSettings,
       vitalsDevice: device.deviceSettings
     }
-
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: runtimeInjection,
