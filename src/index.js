@@ -4,8 +4,13 @@
   // Make sure nothing has been previously injected, and the API key has been set.
   if (window.cruxKey === 'undefined' || document.getElementById('serp-styles')) { return }
 
+  // Discover dark mode settings
+  if (document.querySelector('meta[name="color-scheme"][content="dark"]')) {
+    document.body.classList.add('color_theme--dark')
+  }
   const css = `
     <style id="serp-styles">
+    /* Standard styles */
     .serp-vitals {color: #4d5156; font-size: .75rem;}
     .serp-vitals .red {color: #ff4e42}
     .serp-vitals .green {color: #0cce6b}
@@ -32,6 +37,15 @@
       margin-left: 4px;
       margin-right: 4px;
       display: inline-block;
+    }
+
+    /* Dark mode styles */
+    .color_theme--dark .serp-vitals {
+      border: 1px solid #3c4043;
+      color: #969ba1;
+    }
+    .color_theme--dark .serp-vitals:before{
+      color: #3c4043;
     }
     </style>
   `
